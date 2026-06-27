@@ -18,11 +18,11 @@ html{font-family:var(--f);font-size:16px;color:var(--tx);background:var(--bg);-w
 .hg{position:absolute;top:-30%;left:50%;width:900px;height:900px;background:radial-gradient(circle,rgba(255,215,0,0.08) 0%,rgba(255,215,0,0.03) 30%,transparent 60%);transform:translate(-50%,0);border-radius:50%;pointer-events:none}.hi{position:relative;z-index:1}
 .hb{display:inline-flex;align-items:center;gap:8px;padding:6px 18px 6px 14px;background:rgba(255,255,255,0.08);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);border:1px solid rgba(255,215,0,0.25);border-radius:999px;font-size:12px;font-weight:500;color:var(--gold);margin-bottom:24px}
 .he h1{font-family:var(--fd);font-size:clamp(36px,6vw,68px);font-weight:700;letter-spacing:-0.04em;line-height:1.05;background:linear-gradient(135deg,#ffffff 0%,#ffd700 50%,#ffffff 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:12px;filter:drop-shadow(0 2px 20px rgba(255,215,0,0.15))}
-.hs{font-size:clamp(15px,1.8vw,19px);color:rgba(255,255,255,0.7);max-width:480px;margin:0 auto 28px}
+.hs{font-family:var(--fd);font-size:clamp(15px,1.8vw,19px);font-weight:400;color:rgba(255,255,255,0.7);max-width:480px;margin:0 auto 28px;line-height:1.4}
 .sc{max-width:960px;margin:0 auto;padding:32px 24px 80px}.st2{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px}
 .st3{font-family:var(--fd);font-size:20px;font-weight:600;color:var(--tx)}.sc2{font-size:13px;color:var(--t3);font-weight:500}
 .ds{margin:32px 0 14px 0}.dt{font-family:var(--fd);font-size:15px;font-weight:700;color:var(--tx);letter-spacing:-0.01em}
-.m{background:var(--bg);border:1px solid var(--bd);border-radius:16px;padding:14px 18px;margin-bottom:8px;cursor:pointer;transition:all .3s;position:relative;animation:fadeUp .35s both}
+.m{background:var(--bg2);border:1px solid var(--bd);border-radius:16px;padding:14px 18px;margin-bottom:8px;cursor:pointer;transition:all .3s;position:relative;animation:fadeUp .35s both}
 .m:hover{border-color:var(--bl);box-shadow:0 4px 16px rgba(0,0,0,.06);transform:translateY(-1px)}.m:active{transform:scale(.997)}
 .m.li::before{content:"";position:absolute;top:0;left:0;right:0;height:2px;background:var(--rd);border-radius:16px 16px 0 0}
 .mh{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
@@ -72,9 +72,12 @@ html{font-family:var(--f);font-size:16px;color:var(--tx);background:var(--bg);-w
 
 /* Squad sections */
 .shdr{font-size:12px;font-weight:600;color:var(--t3);text-transform:uppercase;letter-spacing:.03em;margin:10px 0 6px;padding:0 2px}
-.sgrid{display:grid;grid-template-columns:1fr 1fr;gap:4px}
-.sp{background:var(--bg2);border-radius:6px;padding:5px 8px;font-size:12px;color:var(--tx);display:flex;justify-content:space-between;align-items:center}
-.sp .sn{font-weight:500}.sp .sc{font-size:10px;color:var(--t3)}
+/* Squad Table */
+.stbl{width:100%;border-collapse:collapse;font-size:13px;margin-top:4px}
+.stbl tr.sh td{padding:7px 8px;background:var(--bg2);font-weight:600;color:var(--t3);font-size:11px;text-transform:uppercase;letter-spacing:.03em;border-bottom:1px solid var(--dv)}
+.stbl td{padding:5px 8px;border-bottom:1px solid var(--dv);color:var(--tx)}
+.stbl .sn{font-weight:500;color:var(--tx)}
+.stbl .sc{color:var(--t3);text-align:right;font-size:12px}
 
 @keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
 @media(max-width:640px){.tv{grid-template-columns:1fr;gap:12px}.nv{padding:0 16px}.he{padding:calc(52px+28px) 16px 36px}.sc{padding:24px 16px 60px}.bd{gap:6px}.mt{gap:6px}.ms{min-width:40px;font-size:18px;padding:0 2px}.mf{font-size:24px;width:32px}.mn{font-size:13px}.sgrid{grid-template-columns:1fr}}
@@ -164,14 +167,15 @@ h+="</table>";}
 var sq=SQ[n]||[];
 var pos=['门将','后卫','中场','前锋'];
 var emojis={0:'🥅',1:'🛡️',2:'⚡',3:'⚽'};
-for(var p=0;p<pos.length;p++){var pl=sq.filter(function(x){return x.p===pos[p]||(pos[p]==="后卫"&&(x.p==="DF"||x.p==="后卫"))});
+h+='<table class="stbl">';
+for(var p=0;p<pos.length;p++){var pl;
 if(pos[p]==="后卫")pl=sq.filter(function(x){return x.p==="后卫"||x.p==="DF"});
 else if(pos[p]==="中场")pl=sq.filter(function(x){return x.p==="中场"||x.p==="MF"});
 else if(pos[p]==="前锋")pl=sq.filter(function(x){return x.p==="前锋"||x.p==="FW"});
 else pl=sq.filter(function(x){return x.p==="门将"||x.p==="GK"});
-if(pl.length){h+='<div class=\x22shdr\x22>'+emojis[p]+" "+pos[p]+" ("+pl.length+"人)</div><div class=\x22sgrid\x22>";
-for(var j=0;j<pl.length;j++){h+='<div class=\x22sp\x22><span class=\x22sn\x22>'+pl[j].n+'</span>'+(pl[j].c?'<span class=\x22sc\x22>'+pl[j].c+"</span>":"")+"</div>";}
-h+="</div>";}}
+if(pl.length){h+='<tr class="sh"><td colspan="2">'+emojis[p]+" "+pos[p]+" ("+pl.length+"人)</td></tr>";
+for(var j=0;j<pl.length;j++){h+='<tr><td class="sn">'+pl[j].n+'</td><td class="sc">'+(pl[j].c||"")+"</td></tr>";}}
+h+="</table>";}
 return h+"</div></div>";}
 
 document.addEventListener("DOMContentLoaded",function(){
@@ -179,9 +183,6 @@ document.addEventListener("DOMContentLoaded",function(){
 // 先尝试读外部数据
 var xhr=new XMLHttpRequest();
 xhr.open("GET","/tmp/wc_recent.json",true);
-// 如果没有外部数据，使用内嵌的测试数据
-var testMatches=[];
-["A组·第一轮","A组·第二轮","A组·第三轮","B组·第一轮","B组·第二轮","B组·第三轮"].forEach(function(rd,i){});
 render("all");
 var b=document.querySelectorAll(".fb");
 for(var i=0;i<b.length;i++)b[i].addEventListener("click",function(){for(var j=0;j<b.length;j++)b[j].classList.remove("on");this.classList.add("on");render(this.getAttribute("data-f"));});
